@@ -48,8 +48,6 @@ public class Convolution {
     public NeuralNetConfiguration.ListBuilder addConvLayer(int layerNum, NeuralNetConfiguration.ListBuilder listBuilder) {
 
         return listBuilder.layer(layerNum, new ConvolutionLayer.Builder(this.kernelSize, this.kernelSize)
-                //nIn and nOut specify depth. nIn here is the nChannels and nOut is the number of filters to be applied
-//                .nIn(this.inputChannel)
                 .stride(this.strides, this.strides)
                 .nOut(this.filters)
                 .padding(this.padding, this.padding)

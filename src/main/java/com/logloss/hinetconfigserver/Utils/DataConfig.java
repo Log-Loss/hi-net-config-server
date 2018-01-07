@@ -53,4 +53,8 @@ public class DataConfig {
             return InputType.convolutional(height, width, channels);
         }
     }
+
+    public int getSequenceLength() {
+        return sequenceLength;
+    }
 }
