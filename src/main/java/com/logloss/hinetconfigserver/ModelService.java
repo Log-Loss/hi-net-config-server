@@ -7,20 +7,30 @@ import com.logloss.hinetconfigserver.Dense.DenseModel;
 import com.logloss.hinetconfigserver.Recurrent.RnnConfig;
 import com.logloss.hinetconfigserver.Recurrent.RnnModel;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ModelService {
 
+    @Autowired
+    private ModelRepository modelRepository;
+
     public MultiLayerConfiguration buildDenseModel(DenseConfig config) {
-        return new DenseModel(config).getConfig();
+        MultiLayerConfiguration configuration = new DenseModel(config).getConfig();
+        modelRepository.insert(configuration);
+        return configuration;
     }
 
     public MultiLayerConfiguration buildConvModel(ConvConfig config) {
-        return new ConvModel(config).getConfig();
+        MultiLayerConfiguration configuration = new ConvModel(config).getConfig();
+        modelRepository.insert(configuration);
+        return configuration;
     }
 
     public MultiLayerConfiguration buildRnnModel(RnnConfig config) {
-        return new RnnModel(config).getConfig();
+        MultiLayerConfiguration configuration = new RnnModel(config).getConfig();
+        modelRepository.insert(configuration);
+        return configuration;
     }
 }
