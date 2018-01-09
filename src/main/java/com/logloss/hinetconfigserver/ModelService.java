@@ -10,27 +10,43 @@ import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ModelService {
 
     @Autowired
     private ModelRepository modelRepository;
 
-    public MultiLayerConfiguration buildDenseModel(DenseConfig config) {
+    public ModelConfig buildDenseModel(DenseConfig config) {
         MultiLayerConfiguration configuration = new DenseModel(config).getConfig();
-        modelRepository.insert(configuration);
-        return configuration;
+        ModelConfig modelConfig = new ModelConfig(config.userId, configuration.toJson());
+        modelRepository.insert(modelConfig);
+
+        return modelConfig;
     }
 
-    public MultiLayerConfiguration buildConvModel(ConvConfig config) {
+    public ModelConfig buildConvModel(ConvConfig config) {
         MultiLayerConfiguration configuration = new ConvModel(config).getConfig();
-        modelRepository.insert(configuration);
-        return configuration;
+        ModelConfig modelConfig = new ModelConfig(config.userId, configuration.toJson());
+        modelRepository.insert(modelConfig);
+
+        return modelConfig;
     }
 
-    public MultiLayerConfiguration buildRnnModel(RnnConfig config) {
+    public ModelConfig buildRnnModel(RnnConfig config) {
         MultiLayerConfiguration configuration = new RnnModel(config).getConfig();
-        modelRepository.insert(configuration);
-        return configuration;
+        ModelConfig modelConfig = new ModelConfig(config.userId, configuration.toJson());
+        modelRepository.insert(modelConfig);
+
+        return modelConfig;
+    }
+
+    public ModelConfig getModelById(String id) {
+        return modelRepository.getModelConfigByModelId(id);
+    }
+
+    public List<ModelConfig> getModelsByUserId(String id) {
+        return modelRepository.getModelConfigsByUserId(id);
     }
 }

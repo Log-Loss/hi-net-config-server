@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ConvConfig {
 
+    public String userId;
     public String dataset;
     public GlobalVariable globalVariable;
     public List<Layer> layers;
